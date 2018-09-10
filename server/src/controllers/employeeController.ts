@@ -1,5 +1,4 @@
 import { Router, Request, Response, NextFunction } from 'express'
-import Employee from '../models/Employee'
 import { employeeService } from '../services'
 
 const router = Router()

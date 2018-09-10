@@ -4,7 +4,7 @@ export type EmployeeSchema = {
   name: string
 }
 
-export type EmployeeDocument = EmployeeSchema & mongoose.Document
+export type EmployeeDocument = EmployeeSchema & Document
 
 const employeeSchema = new mongoose.Schema({
   name: { type: String, required: true },
