@@ -12,9 +12,9 @@ class AvailableEmployees extends React.Component<object, State> {
   public async componentDidMount() {
     const res = await fetch('/api/employees')
     const employees = await res.json()
-    console.log(employees)
-    this.setState(() => ({ employees }))
+    this.setState({ employees })
   }
+
   public render() {
     return (
       <div>

@@ -13,4 +13,9 @@ router.post('/companies', async (req: Request, res: Response, next: NextFunction
   res.status(201).send(newCompany)
 })
 
+router.put('/companies/:id', async (req: Request, res: Response, next: NextFunction) => {
+  const editedCompany = await companyService.edit(req.params.id, req.body)
+  res.send(editedCompany)
+})
+
 export default router

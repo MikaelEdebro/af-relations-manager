@@ -1,8 +1,8 @@
 import request from 'supertest'
 import app from '../../src/app'
 import mongoose from 'mongoose'
-import { Company } from '../../src/models'
-import { companyService } from '../../src/services'
+import { Company, Employee } from '../../src/models'
+import { companyService, employeeService } from '../../src/services'
 
 describe('companyController', () => {
   let db
@@ -15,6 +15,7 @@ describe('companyController', () => {
 
   afterEach(async () => {
     await Company.deleteMany({})
+    await Employee.deleteMany({})
   })
 
   afterAll(async () => {
@@ -41,6 +42,26 @@ describe('companyController', () => {
       .expect(201)
       .end((err, { body }) => {
         expect(body.name).toEqual('New Frontier Inc')
+        done()
+      })
+  })
+
+  test.only('PUT to /companies/:id updates correct company', async done => {
+    const employees = [
+      await employeeService.create({ name: 'Mikael Edebro' }),
+      await employeeService.create({ name: 'Maria Edebro' }),
+    ]
+    const company = await companyService.create({ name: 'Edebro Consulting AB' })
+
+    request(app)
+      .put('/api/companies/' + company._id.toString())
+      .send({ name: 'New Edebro AB', employees })
+      .expect(200)
+      .end((err, { body }) => {
+        console.log(body)
+        expect(body.name).toEqual('New Edebro AB')
+        expect(body.employees).toHaveLength(2)
+        expect(body.employees[0].name).toEqual('Mikael Edebro')
         done()
       })
   })

@@ -8,10 +8,16 @@ export default class CompanyService {
   }
 
   getAll = async () => {
-    return await this.Company.find({})
+    return await this.Company.find({}).populate('employees')
   }
 
   create = async (values: any) => {
     return await this.Company.create(values)
+  }
+
+  edit = async (companyId: string, values: any) => {
+    return await this.Company.findOneAndUpdate(companyId, values, { new: true }).populate(
+      'employees'
+    )
   }
 }
