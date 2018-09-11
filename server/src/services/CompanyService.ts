@@ -20,18 +20,20 @@ export default class CompanyService {
   }
 
   edit = async (companyId: string, values: any): Promise<CompanyDocument | null> => {
-    return await this.Company.findOneAndUpdate(companyId, values, { new: true }).populate(
+    return await this.Company.findOneAndUpdate({ _id: companyId }, values, { new: true }).populate(
       'employees'
     )
   }
 
   addEmployee = async (companyId: string, employeeId: string): Promise<CompanyDocument | null> => {
+    console.log(companyId)
     const company = await this.getById(companyId)
     if (!company) return Promise.resolve(null)
     const employeeIndex = company.employees.findIndex(e => e._id.toString() === employeeId)
     if (employeeIndex > 0) return Promise.resolve(null)
-    company.employees.push(employeeId)
-    return await this.edit(companyId, { employees: company.employees })
+    const employees = [...company.employees]
+    employees.push(employeeId)
+    return await this.edit(companyId, { employees })
   }
 
   removeEmployee = async (

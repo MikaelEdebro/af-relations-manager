@@ -26,7 +26,7 @@ const AddEmployee: React.SFC<Props> = props => {
           <button type="button" className="btn btn-warning" onClick={() => props.toggle(false)}>
             Cancel
           </button>
-          <button type="button" className="btn btn-primary" onClick={props.handleSubmit}>
+          <button type="button" className="btn btn-primary ml-2" onClick={props.handleSubmit}>
             Submit
           </button>
         </div>

@@ -2,6 +2,7 @@ import * as React from 'react'
 import CompanyList from './CompanyList'
 import AddCompany from './AddCompany'
 import * as ReactModal from 'react-modal'
+import { getFetchHeaders } from '../../utility/helpers'
 
 interface State {
   companies: any[]
@@ -28,16 +29,7 @@ class Companies extends React.Component<object, State> {
 
   handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
-
-    const req = { name: this.state.newCompanyName }
-
-    await fetch('/api/companies', {
-      body: JSON.stringify(req),
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-    })
+    await fetch('/api/companies', getFetchHeaders('POST', { name: this.state.newCompanyName }))
 
     this.toggleAddCompany(false)
     await this.fetchCompanies()
@@ -52,15 +44,11 @@ class Companies extends React.Component<object, State> {
   }
 
   removeEmployeeFromCompany = async (companyId: string, employeeId: string) => {
-    const req = { companyId, employeeId }
-
-    await fetch(`/api/companies/${companyId}/${employeeId}`, {
-      body: JSON.stringify(req),
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-    })
+    await fetch(
+      `/api/companies/${companyId}/${employeeId}`,
+      getFetchHeaders('DELETE', { companyId, employeeId })
+    )
+    await this.fetchCompanies()
   }
 
   render() {

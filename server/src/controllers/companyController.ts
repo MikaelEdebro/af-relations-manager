@@ -21,9 +21,15 @@ router.put('/companies/:id', async (req: Request, res: Response, next: NextFunct
 router.delete(
   '/companies/:id/:employeeId',
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.params)
     const editedCompany = await companyService.removeEmployee(req.params.id, req.params.employeeId)
-    console.log(editedCompany)
+    res.send(editedCompany)
+  }
+)
+
+router.put(
+  '/companies/:id/:employeeId',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const editedCompany = await companyService.addEmployee(req.params.id, req.params.employeeId)
     res.send(editedCompany)
   }
 )

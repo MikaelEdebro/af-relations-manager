@@ -1,40 +1,24 @@
 import * as React from 'react'
-import { RouteComponentProps } from 'react-router-dom'
 
-interface Props extends RouteComponentProps<any> {}
+interface Props {
+  companies: any[]
+  addEmployee: ((request: any) => void)
+}
 interface State {
   name: string
   selectedCompany: string
-  companies: any[]
 }
 
 export default class AddEmployee extends React.Component<Props, State> {
   readonly state: State = {
     name: '',
-    companies: [],
     selectedCompany: '',
-  }
-
-  async componentDidMount() {
-    const res = await fetch('/api/companies')
-    const companies = await res.json()
-    this.setState({ companies })
   }
 
   handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
 
-    const req = { name: this.state.name, companyId: this.state.selectedCompany }
-
-    await fetch('/api/employees', {
-      body: JSON.stringify(req),
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-    })
-
-    this.props.history.push('/employees/available')
+    this.props.addEmployee({ name: this.state.name, companyId: this.state.selectedCompany })
   }
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +54,7 @@ export default class AddEmployee extends React.Component<Props, State> {
             >
               <option value="">No association</option>
               <option value="">----------------</option>
-              {this.state.companies.map(c => (
+              {this.props.companies.map(c => (
                 <option key={c._id} value={c._id}>
                   {c.name}
                 </option>
