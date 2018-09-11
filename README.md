@@ -18,8 +18,7 @@ To run tests:
 npm test
 ```
 
-Make sure your version of Node.js is up to date. `node -v`. There might be some issues installing packages with old version of Node. I'm using Node 10.9.0.
-It should open a browser window with http://localhost:3000
+Make sure your version of Node.js is up to date. `node -v`. There might be some issues installing packages with old version of Node. I'm using Node 10.9.0. It should open a browser window with http://localhost:3000
 
 ## About the app
 
@@ -40,3 +39,4 @@ It should open a browser window with http://localhost:3000
 - More complete test suite.
 - Better validation for both backend & frontend
 - Error handling. Currently async/await implementation does not handle errors gracefully. Create Express middleware to catch any errors.
+- Better typescript type coverage. Right now I'm using any in too many places, but I didn't have time to create interfaces for everything.
