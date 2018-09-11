@@ -3,6 +3,7 @@ import CompanyList from './CompanyList'
 import AddCompany from './AddCompany'
 import * as ReactModal from 'react-modal'
 import { getFetchHeaders } from '../../utility/helpers'
+import ModalClose from '../core/ModalClose'
 
 interface State {
   companies: any[]
@@ -31,7 +32,7 @@ class Companies extends React.Component<object, State> {
     event.preventDefault()
     await fetch('/api/companies', getFetchHeaders('POST', { name: this.state.newCompanyName }))
 
-    this.toggleAddCompany(false)
+    this.toggleAddCompanyModal(false)
     await this.fetchCompanies()
   }
 
@@ -39,7 +40,7 @@ class Companies extends React.Component<object, State> {
     this.setState({ newCompanyName: event.target.value })
   }
 
-  toggleAddCompany = (value: boolean) => {
+  toggleAddCompanyModal = (value: boolean) => {
     this.setState({ showAddCompanyModal: value, newCompanyName: '' })
   }
 
@@ -54,27 +55,35 @@ class Companies extends React.Component<object, State> {
   render() {
     return (
       <div>
-        <h1>Companies</h1>
-        <ReactModal
-          isOpen={this.state.showAddCompanyModal}
-          onRequestClose={() => this.toggleAddCompany(false)}
-          ariaHideApp={false}
-        >
-          <AddCompany
-            handleSubmit={this.handleSubmit}
-            handleChange={this.handleChange}
-            toggle={this.toggleAddCompany}
-            newCompanyName={this.state.newCompanyName}
-          />
-        </ReactModal>
-        <button className="btn btn-primary" onClick={() => this.toggleAddCompany(true)}>
-          Add Company
-        </button>
+        <div className="row align-items-center">
+          <div className="col">
+            <h1>Companies</h1>
+          </div>
+          <div className="col text-right">
+            <button className="btn btn-primary" onClick={() => this.toggleAddCompanyModal(true)}>
+              Add Company
+            </button>
+          </div>
+        </div>
 
         <CompanyList
           companies={this.state.companies}
           removeEmployeeFromCompany={this.removeEmployeeFromCompany}
         />
+
+        <ReactModal
+          isOpen={this.state.showAddCompanyModal}
+          onRequestClose={() => this.toggleAddCompanyModal(false)}
+          ariaHideApp={false}
+        >
+          <ModalClose toggleModal={() => this.toggleAddCompanyModal(false)} />
+          <AddCompany
+            handleSubmit={this.handleSubmit}
+            handleChange={this.handleChange}
+            toggle={this.toggleAddCompanyModal}
+            newCompanyName={this.state.newCompanyName}
+          />
+        </ReactModal>
       </div>
     )
   }

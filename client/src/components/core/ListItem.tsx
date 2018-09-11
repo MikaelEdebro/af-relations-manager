@@ -6,6 +6,7 @@ const listItemStyles = {
   borderRadius: 4,
   margin: '20px 0',
   cursor: 'pointer',
+  minHeight: 60,
 }
 
 interface Props {

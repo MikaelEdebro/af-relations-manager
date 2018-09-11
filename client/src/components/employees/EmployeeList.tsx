@@ -33,8 +33,13 @@ class EmployeeList extends React.Component<Props, State> {
       </button>
     )
     const CompanySelect = () => (
-      <div>
-        <select value={selectedCompanyId || ''} onChange={this.handleSelectChange}>
+      <div className="row justify-content-end align-items-center">
+        <select
+          value={selectedCompanyId || ''}
+          onChange={this.handleSelectChange}
+          className="form-control"
+          style={{ width: 'auto', display: 'inline-block' }}
+        >
           <option value="">No association</option>
           <option value="">----------------</option>
           {this.props.companies.map((c: any) => (

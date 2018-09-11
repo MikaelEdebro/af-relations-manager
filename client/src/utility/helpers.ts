@@ -1,4 +1,4 @@
-export const getFetchHeaders = (method?: string, body?: any) => {
+export function getFetchHeaders(method?: string, body?: any) {
   const headers: any = {
     method: method || 'GET',
     headers: {
@@ -11,4 +11,20 @@ export const getFetchHeaders = (method?: string, body?: any) => {
   }
 
   return headers
+}
+
+export function getTextProperty(obj: object | undefined, propName: string): string {
+  if (!obj) {
+    return ''
+  }
+
+  return obj[propName] || ''
+}
+
+export function getArrayProperty(obj: object | undefined, propName: string): any[] {
+  if (!obj) {
+    return []
+  }
+
+  return obj[propName] || []
 }

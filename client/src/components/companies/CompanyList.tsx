@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as ReactModal from 'react-modal'
 import ListItem from '../core/ListItem'
+import ModalClose from '../core/ModalClose'
+import { getTextProperty, getArrayProperty } from '../../utility/helpers'
 
 interface Props {
   companies: any[]
@@ -13,7 +15,7 @@ interface State {
 }
 
 class CompanyList extends React.Component<Props, State> {
-  readonly state = {
+  readonly state: State = {
     selectedCompany: undefined,
     showModal: false,
   }
@@ -27,6 +29,10 @@ class CompanyList extends React.Component<Props, State> {
       getTextProperty(this.state.selectedCompany, '_id'),
       employeeId
     )
+  }
+
+  toggleModal = (value: boolean) => {
+    this.setState({ showModal: value })
   }
 
   render() {
@@ -48,8 +54,10 @@ class CompanyList extends React.Component<Props, State> {
         <ReactModal
           isOpen={!!(this.state.showModal && this.state.selectedCompany)}
           ariaHideApp={false}
-          onRequestClose={() => this.setState({ showModal: false })}
+          onRequestClose={() => this.toggleModal(false)}
         >
+          <ModalClose toggleModal={() => this.toggleModal(false)} />
+
           <h2>{getTextProperty(this.state.selectedCompany, 'name')}</h2>
           {getArrayProperty(this.state.selectedCompany, 'employees').map((e: any) => (
             <ListItem
@@ -60,7 +68,7 @@ class CompanyList extends React.Component<Props, State> {
                   className="btn btn-danger btn-sm"
                   onClick={() => this.removeEmployee(e._id)}
                 >
-                  Delete
+                  Remove from company
                 </button>
               }
             />
@@ -73,18 +81,4 @@ class CompanyList extends React.Component<Props, State> {
   }
 }
 
-function getTextProperty(obj: object | undefined, propName: string): string {
-  if (!obj) {
-    return ''
-  }
-
-  return obj[propName] || ''
-}
-function getArrayProperty(obj: object | undefined, propName: string): any[] {
-  if (!obj) {
-    return []
-  }
-
-  return obj[propName] || []
-}
 export default CompanyList
