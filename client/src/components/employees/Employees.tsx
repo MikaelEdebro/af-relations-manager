@@ -98,6 +98,11 @@ class Employees extends React.Component<Props, State> {
           isOpen={this.state.showAddEmployeeModal}
           onRequestClose={() => this.toggleAddEmployeeModal(false)}
           ariaHideApp={false}
+          style={{
+            content: {
+              maxHeight: '460px',
+            },
+          }}
         >
           <ModalClose toggleModal={() => this.toggleAddEmployeeModal(false)} />
           <AddEmployee

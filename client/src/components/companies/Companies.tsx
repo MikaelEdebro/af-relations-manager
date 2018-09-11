@@ -79,6 +79,11 @@ class Companies extends React.Component<object, State> {
           isOpen={this.state.showAddCompanyModal}
           onRequestClose={() => this.toggleAddCompanyModal(false)}
           ariaHideApp={false}
+          style={{
+            content: {
+              maxHeight: '300px',
+            },
+          }}
         >
           <ModalClose toggleModal={() => this.toggleAddCompanyModal(false)} />
           <AddCompany
