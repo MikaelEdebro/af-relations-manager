@@ -3,12 +3,13 @@ import app from '../../src/app'
 import mongoose from 'mongoose'
 import { Company, Employee } from '../../src/models'
 import { companyService, employeeService } from '../../src/services'
+import testKeys from '../config/testKeys'
 
 describe('companyController', () => {
   let db
   beforeAll(() => {
     db = mongoose.connect(
-      'mongodb://localhost:27017/af-relations-manager_test',
+      testKeys.mongoURI,
       { useNewUrlParser: true }
     )
   })
@@ -19,7 +20,7 @@ describe('companyController', () => {
   })
 
   afterAll(async () => {
-    db.close()
+    await mongoose.disconnect()
   })
 
   test('GET to /companies fetches all companies', async done => {
@@ -35,7 +36,7 @@ describe('companyController', () => {
       })
   })
 
-  test('POST to /companies creates new company', async done => {
+  test('POST to /companies creates new company', done => {
     request(app)
       .post('/api/companies')
       .send({ name: 'New Frontier Inc' })

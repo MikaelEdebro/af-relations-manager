@@ -26,7 +26,6 @@ export default class CompanyService {
   }
 
   addEmployee = async (companyId: string, employeeId: string): Promise<CompanyDocument | null> => {
-    console.log(companyId)
     const company = await this.getById(companyId)
     if (!company) return Promise.resolve(null)
     const employeeIndex = company.employees.findIndex(e => e._id.toString() === employeeId)

@@ -100,7 +100,11 @@ class Employees extends React.Component<Props, State> {
           ariaHideApp={false}
         >
           <ModalClose toggleModal={() => this.toggleAddEmployeeModal(false)} />
-          <AddEmployee companies={this.state.companies} addEmployee={this.addEmployee} />
+          <AddEmployee
+            companies={this.state.companies}
+            addEmployee={this.addEmployee}
+            toggleAddEmployeeModal={this.toggleAddEmployeeModal}
+          />
         </ReactModal>
       </div>
     )

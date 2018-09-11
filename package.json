@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cd ./server && npm run dev"
+    "install": "npm run install:client && npm run install:server",
+    "install:client": "cd ./client && npm install",
+    "install:server": "cd ./server && npm install",
+    "dev": "cd ./server && npm run dev",
+    "test": "cd ./server && npm test",
+    "test:watch": "cd ./server && npm run test:watch"
   },
   "author": "",
   "license": "ISC",

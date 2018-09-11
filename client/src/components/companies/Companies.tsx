@@ -66,10 +66,14 @@ class Companies extends React.Component<object, State> {
           </div>
         </div>
 
-        <CompanyList
-          companies={this.state.companies}
-          removeEmployeeFromCompany={this.removeEmployeeFromCompany}
-        />
+        {this.state.companies.length ? (
+          <CompanyList
+            companies={this.state.companies}
+            removeEmployeeFromCompany={this.removeEmployeeFromCompany}
+          />
+        ) : (
+          'No companies added'
+        )}
 
         <ReactModal
           isOpen={this.state.showAddCompanyModal}

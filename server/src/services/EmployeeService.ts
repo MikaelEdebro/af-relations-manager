@@ -1,4 +1,4 @@
-import Employee from '../models/Employee'
+import Employee, { EmployeeDocument } from '../models/Employee'
 import { companyService } from '../services'
 
 export default class EmployeeService {
@@ -8,10 +8,11 @@ export default class EmployeeService {
     this.Employee = employee
   }
 
-  getAllAvailable = async () => {
+  getAllAvailable = async (): Promise<EmployeeDocument[] | null> => {
     const companies = await companyService.getAll()
     let employeeIdsConnectedToCompany = []
 
+    // make sure to strip out employees currently connected to a company
     if (companies) {
       companies.forEach((company: any) => {
         employeeIdsConnectedToCompany = employeeIdsConnectedToCompany.concat(
@@ -23,8 +24,7 @@ export default class EmployeeService {
     return await this.Employee.find({ _id: { $nin: employeeIdsConnectedToCompany } })
   }
 
-  create = async (values: any) => {
-    console.log(values)
+  create = async (values: any): Promise<EmployeeDocument | null> => {
     return await this.Employee.create(values)
   }
 }

@@ -1,5 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { companyService } from '../services'
+import validateCompany from '../middleware/validation/validateCompany'
+import { validationResult } from 'express-validator/check'
 
 const router = Router()
 
@@ -8,10 +10,19 @@ router.get('/companies', async (req: Request, res: Response, next: NextFunction)
   res.send(companies)
 })
 
-router.post('/companies', async (req: Request, res: Response, next: NextFunction) => {
-  const newCompany = await companyService.create(req.body)
-  res.status(201).send(newCompany)
-})
+router.post(
+  '/companies',
+  validateCompany,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
+
+    const newCompany = await companyService.create(req.body)
+    res.status(201).send(newCompany)
+  }
+)
 
 router.put('/companies/:id', async (req: Request, res: Response, next: NextFunction) => {
   const editedCompany = await companyService.edit(req.params.id, req.body)

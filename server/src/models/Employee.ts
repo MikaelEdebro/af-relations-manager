@@ -10,4 +10,4 @@ const employeeSchema = new mongoose.Schema({
   name: { type: String, required: true },
 })
 
-export default mongoose.model('employee', employeeSchema)
+export default mongoose.model<EmployeeDocument>('employee', employeeSchema)

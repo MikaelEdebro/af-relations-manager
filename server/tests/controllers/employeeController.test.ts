@@ -3,12 +3,13 @@ import app from '../../src/app'
 import mongoose from 'mongoose'
 import Employee from '../../src/models/Employee'
 import { employeeService } from '../../src/services'
+import testKeys from '../config/testKeys'
 
 describe('employeeController', () => {
   let db
   beforeAll(() => {
     db = mongoose.connect(
-      'mongodb://localhost:27017/af-relations-manager_test',
+      testKeys.mongoURI,
       { useNewUrlParser: true }
     )
   })
@@ -18,7 +19,7 @@ describe('employeeController', () => {
   })
 
   afterAll(async () => {
-    db.close()
+    await mongoose.disconnect()
   })
 
   test('GET to /employees fetches all employees', async done => {
@@ -35,7 +36,7 @@ describe('employeeController', () => {
       })
   })
 
-  test('POST to /employees creates new employee', async done => {
+  test('POST to /employees creates new employee', done => {
     request(app)
       .post('/api/employees')
       .send({ name: 'Hyland Test' })

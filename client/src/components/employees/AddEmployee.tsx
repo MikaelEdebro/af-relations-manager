@@ -1,8 +1,10 @@
 import * as React from 'react'
+import CompanySelect from '../companies/CompanySelect'
 
 interface Props {
   companies: any[]
   addEmployee: ((request: any) => void)
+  toggleAddEmployeeModal: ((value: boolean) => void)
 }
 interface State {
   name: string
@@ -45,24 +47,21 @@ export default class AddEmployee extends React.Component<Props, State> {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="company">Company Association</label>
-            <select
-              id="company"
-              className="form-control"
-              value={this.state.selectedCompany}
-              onChange={this.handleSelectChange}
-            >
-              <option value="">No association</option>
-              <option value="">----------------</option>
-              {this.props.companies.map(c => (
-                <option key={c._id} value={c._id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
+            <CompanySelect
+              companies={this.props.companies}
+              selectedCompanyId={this.state.selectedCompany}
+              handleSelectChange={this.handleSelectChange}
+            />
           </div>
           <div className="form-group text-right">
-            <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>
+            <button
+              type="button"
+              className="btn btn-warning"
+              onClick={() => this.props.toggleAddEmployeeModal(false)}
+            >
+              Cancel
+            </button>
+            <button type="button" className="btn btn-primary ml-2" onClick={this.handleSubmit}>
               Submit
             </button>
           </div>
