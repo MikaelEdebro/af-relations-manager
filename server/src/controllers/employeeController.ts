@@ -4,7 +4,7 @@ import { employeeService, companyService } from '../services'
 const router = Router()
 
 router.get('/employees', async (req: Request, res: Response, next: NextFunction) => {
-  const people = await employeeService.getAll()
+  const people = await employeeService.getAllAvailable()
   res.send(people)
 })
 

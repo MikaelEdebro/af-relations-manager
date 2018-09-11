@@ -28,9 +28,10 @@ export default class CompanyService {
   addEmployee = async (companyId: string, employeeId: string): Promise<CompanyDocument | null> => {
     const company = await this.getById(companyId)
     if (!company) return Promise.resolve(null)
-    if (company.employees.indexOf(e => e._id === employeeId) > 0) return Promise.resolve(null)
+    const employeeIndex = company.employees.findIndex(e => e._id.toString() === employeeId)
+    if (employeeIndex > 0) return Promise.resolve(null)
     company.employees.push(employeeId)
-    return await this.edit(companyId, company)
+    return await this.edit(companyId, { employees: company.employees })
   }
 
   removeEmployee = async (
@@ -39,7 +40,8 @@ export default class CompanyService {
   ): Promise<CompanyDocument | null> => {
     const company = await this.getById(companyId)
     if (!company) return Promise.resolve(null)
-    const employeeIndex = company.employees.indexOf(e => e._id === employeeId)
+
+    const employeeIndex = company.employees.findIndex(e => e._id.toString() === employeeId)
     if (employeeIndex < 0) return Promise.resolve(null)
     let employees = [...company.employees]
     employees.splice(employeeIndex, 1)

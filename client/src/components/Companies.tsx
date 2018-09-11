@@ -48,7 +48,7 @@ class Companies extends React.Component<object, State> {
   }
 
   toggleAddCompany = (value: boolean) => {
-    this.setState({ showAddCompanyModal: value })
+    this.setState({ showAddCompanyModal: value, newCompanyName: '' })
   }
 
   removeEmployeeFromCompany = async (companyId: string, employeeId: string) => {
