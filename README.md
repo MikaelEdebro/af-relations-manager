@@ -12,13 +12,15 @@ cd ar-relations-manager
 npm install && npm run dev
 ```
 
+It should open a browser window with http://localhost:3000
+
 To run tests:
 
 ```
 npm test
 ```
 
-Make sure your version of Node.js is up to date. `node -v`. There might be some issues installing packages with old version of Node. I'm using Node 10.9.0. It should open a browser window with http://localhost:3000
+Make sure your version of Node.js is up to date. `node -v`. There might be some issues installing packages with old version of Node. I'm using Node 10.9.0.
 
 ## About the app
 
