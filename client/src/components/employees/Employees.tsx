@@ -91,7 +91,7 @@ class Employees extends React.Component<Props, State> {
             selectedEmployeeId={this.state.selectedEmployeeId}
           />
         ) : (
-          'Currently no available employees'
+          'Currently no employees that are not associated with a company'
         )}
 
         <ReactModal
