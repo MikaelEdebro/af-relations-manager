@@ -46,19 +46,19 @@ describe('companyController', () => {
       })
   })
 
-  test.only('PUT to /companies/:id updates correct company', async done => {
+  test('PUT to /companies/:id updates correct company', async done => {
     const employees = [
       await employeeService.create({ name: 'Mikael Edebro' }),
       await employeeService.create({ name: 'Maria Edebro' }),
     ]
     const company = await companyService.create({ name: 'Edebro Consulting AB' })
+    if (!company) return
 
     request(app)
       .put('/api/companies/' + company._id.toString())
       .send({ name: 'New Edebro AB', employees })
       .expect(200)
       .end((err, { body }) => {
-        console.log(body)
         expect(body.name).toEqual('New Edebro AB')
         expect(body.employees).toHaveLength(2)
         expect(body.employees[0].name).toEqual('Mikael Edebro')

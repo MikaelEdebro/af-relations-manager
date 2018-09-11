@@ -12,7 +12,6 @@ export default class EmployeeService {
   }
 
   create = async (values: any) => {
-    console.log('values', values)
     return await this.Employee.create(values)
   }
 }

@@ -2,8 +2,8 @@ import * as React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Header from './components/Header'
 import AddEmployee from './components/AddEmployee'
-import CompanyList from './components/CompanyList'
 import AvailableEmployees from './components/AvailableEmployees'
+import Companies from './components/Companies'
 
 class App extends React.Component {
   public render() {
@@ -15,7 +15,7 @@ class App extends React.Component {
           <Switch>
             <Route path="/employees/add" component={AddEmployee} />
             <Route path="/employees/available" component={AvailableEmployees} />
-            <Route path="/companies" component={CompanyList} />
+            <Route path="/companies" component={Companies} />
           </Switch>
         </div>
       </Router>

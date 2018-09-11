@@ -18,4 +18,14 @@ router.put('/companies/:id', async (req: Request, res: Response, next: NextFunct
   res.send(editedCompany)
 })
 
+router.delete(
+  '/companies/:id/:employeeId',
+  async (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.params)
+    const editedCompany = await companyService.removeEmployee(req.params.id, req.params.employeeId)
+    console.log(editedCompany)
+    res.send(editedCompany)
+  }
+)
+
 export default router

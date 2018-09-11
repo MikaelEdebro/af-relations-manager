@@ -18,14 +18,14 @@ export default class AddEmployee extends React.Component<Props, State> {
   async componentDidMount() {
     const res = await fetch('/api/companies')
     const companies = await res.json()
-    console.log(companies)
     this.setState({ companies })
   }
 
   handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
 
-    const req = { name: this.state.name }
+    const req = { name: this.state.name, companyId: this.state.selectedCompany }
+
     await fetch('/api/employees', {
       body: JSON.stringify(req),
       method: 'POST',
@@ -42,8 +42,7 @@ export default class AddEmployee extends React.Component<Props, State> {
   }
 
   handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(event.target.value)
-    //this.setState({ selectedCompany: event.target.value })
+    this.setState({ selectedCompany: event.target.value })
   }
 
   render() {
@@ -72,7 +71,7 @@ export default class AddEmployee extends React.Component<Props, State> {
               <option value="">No association</option>
               <option value="">----------------</option>
               {this.state.companies.map(c => (
-                <option key={c._id} value={c.name}>
+                <option key={c._id} value={c._id}>
                   {c.name}
                 </option>
               ))}
