@@ -29,6 +29,17 @@ class CompanyList extends React.Component<Props, State> {
       getTextProperty(this.state.selectedCompany, '_id'),
       employeeId
     )
+
+    // remove employee from selectedCompany (to update GUI)
+    const companyEmployees = [...this.state.selectedCompany.employees]
+    const removeEmployeeIndex = companyEmployees.findIndex(e => e._id === employeeId)
+
+    if (removeEmployeeIndex > -1) {
+      companyEmployees.splice(removeEmployeeIndex, 1)
+      this.setState({
+        selectedCompany: { ...this.state.selectedCompany, employees: companyEmployees },
+      })
+    }
   }
 
   toggleModal = (value: boolean) => {
